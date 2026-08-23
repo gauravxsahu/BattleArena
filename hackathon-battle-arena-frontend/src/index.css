@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-arena-border;
+  }
+  html {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-arena-bg text-arena-text;
+    background-image: radial-gradient(circle at 20% 0%, rgba(124, 92, 255, 0.08), transparent 40%),
+      radial-gradient(circle at 80% 0%, rgba(0, 229, 160, 0.06), transparent 40%);
+    background-attachment: fixed;
+  }
+  ::selection {
+    @apply bg-arena-primary/40 text-white;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-arena-primary ring-offset-2 ring-offset-arena-bg;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-arena-surface/80 backdrop-blur-xl border border-arena-border rounded-2xl;
+  }
+  .card {
+    @apply bg-arena-surface border border-arena-border rounded-2xl shadow-card;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-arena-primary px-4 py-2.5 font-semibold text-white transition-all hover:bg-arena-primaryDark active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-arena-border bg-arena-surface2 px-4 py-2.5 font-semibold text-arena-text transition-all hover:border-arena-primary/50 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-arena-danger px-4 py-2.5 font-semibold text-white transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .input-field {
+    @apply w-full rounded-xl border border-arena-border bg-arena-surface2 px-4 py-2.5 text-arena-text placeholder:text-arena-muted transition-colors focus:border-arena-primary;
+  }
+  .label-text {
+    @apply mb-1.5 block text-sm font-medium text-arena-muted;
+  }
+  .badge-pill {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-arena-border rounded-full;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .text-gradient {
+    @apply bg-gradient-to-r from-arena-primary to-arena-accent bg-clip-text text-transparent;
+  }
+}
