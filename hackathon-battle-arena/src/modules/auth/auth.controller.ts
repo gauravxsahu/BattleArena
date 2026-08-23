@@ -10,15 +10,25 @@ const REFRESH_COOKIE = "refreshToken";
 function setRefreshCookie(res: Response, token: string) {
   res.cookie(REFRESH_COOKIE, token, {
     httpOnly: true,
+    // Frontend (vercel.app) and backend (onrender.com) are different
+    // domains, so this is a cross-site request. Browsers only attach
+    // cookies to cross-site XHR/fetch calls when sameSite is "none"
+    // (and secure must be true for that to be allowed). "lax" silently
+    // drops the cookie on cross-site POSTs like /auth/refresh, which
+    // caused the 401.
     secure: env.isProduction,
-    sameSite: "lax",
+    sameSite: env.isProduction ? "none" : "lax",
     path: "/api/auth",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 }
 
 function clearRefreshCookie(res: Response) {
-  res.clearCookie(REFRESH_COOKIE, { path: "/api/auth" });
+  res.clearCookie(REFRESH_COOKIE, {
+    path: "/api/auth",
+    secure: env.isProduction,
+    sameSite: env.isProduction ? "none" : "lax",
+  });
 }
 
 export const authController = {
